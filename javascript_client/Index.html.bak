@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Articles HTML Client JS</title>
+	<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+</head>
+
+<body onload="loadData()">
+	<h2>Articles: Javascript</h2>
+	<div id="articles" />
+	<table id="tabs">
+	<tr>
+		<td>sss</td>
+		<td>sdfs</td>
+		<td>asdf</td>
+	</tr>
+	<script>
+		async function loadData() {
+			var url = "http://localhost:4000/articles"
+			var response = await fetch(url, {headers: {'Accept': 'application/json'}})
+			var data = await response.json()
+			var div = ''
+			div += "<tr><th>Title</th><th>Article</th><th>Published</th></tr>
+			for(var i = 0; i < data.length; i++)
+			{				
+				div += "<tr><td> " + data[i]['title'] + "</td><td> " + data[i]['body'] + "</td><td> " + data[i]['published'] +"</td></tr>"
+			}
+			
+			 console.log(data)
+			 console.log(div)
+			document.getElementById('tabs').innerHTML = div
+		}
+	</script>
+</table>
+</body>
+</html>
