@@ -2,39 +2,130 @@
 <html>
 <head>
 	<title>Articles HTML Client JS</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<style>
 table, th, td {
   border: 1px solid black;
 }
+
+
 </style>
 </head>
 
 <body onload="loadData()">
-	<h2>Articles: Javascript</h2>
-	<div id="articles" />
-	<table id="tabs">
-	<tr>
-		<td>sss</td>
-		<td>sdfs</td>
-		<td>asdf</td>
-	</tr>
+	
+	<div class="container-fluid" style="margin-left: 5%; margin-right:5%">
+	<h1 style="
+    margin-bottom: 30px;
+text-align: center">Articles: Javascript</h1>
+	<div class="form-group row">
+	<div class="col-sm-3">
+	
+	<h2>Add an Article</h2>
+  <div class="form-group row" id="table_id_div">
+    <label for="table_id" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="table_id">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="table_id" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="article_title">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="exampleFormControlSelect2" class="col-sm-2 col-form-label">Article Body</label>
+	<div class="col-sm-10">
+    <textarea class="form-control" id="article_body" rows="3" ></textarea>
+</div>
+  </div>
+  <div class="form-group" id="published_checkbox">
+    <div class="form-check">
+  
+  <label class="form-check-label" for="article_published">
+   Published
+  </label>
+  <input class="form-check-input" type="checkbox" value="" id="article_published">
+</div>
+  </div>
+  <button class="btn btn-primary" onclick='addArticle()'>Add Article</button>
+
+<div id="result" >
+	</div>
+	</div>
+	
+	<div class="col-sm-9">
+	<table id="tabs" class="table table-striped table-bordered">
+	<h2>View Articles</h2>
 	<script>
 		async function loadData() {
+		document.getElementById('table_id_div').style.display = 'none';
+		document.getElementById('published_checkbox').style.display = 'none';
+		
+		
 			var url = "http://localhost:4000/articles"
-			var response = await fetch(url, {headers: {'Accept': 'application/json'}})
+			var response = await fetch(url, { 
+				method: 'GET', 
+				headers: {'Accept': 'application/json'}
+				})
 			var data = await response.json()
 			var div = ''
-			div += "<tr><th>Title</th><th>Article</th><th>Published</th></tr>"
+			var rowId
+			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th></tr>"
 			for(var i = 0; i < data.length; i++)
-			{				
-				div += "<tr><td> " + data[i]['title'] + "</td><td> " + data[i]['body'] + "</td><td> " + data[i]['published'] +"</td></tr>"
+			{	
+				rowId = data[i]['id']
+				div += "<tr id='" + rowId +"'><td> " + data[i]['title'] + "</td><td> " + data[i]['body'] + "</td><td> " + data[i]['published'] +"</td><td><button type='button' class='btn cancel' onclick='deleteRow(" + rowId +")'>Delete</td></tr>"
 			}
 			
-			 console.log(data)
-			 console.log(div)
 			document.getElementById('tabs').innerHTML = div
 		}
+		async function deleteRow(x) {
+			var url = "http://localhost:4000/articles/"+ x
+			var response = await fetch(url, { 
+				method: 'DELETE', 
+				headers: {'Accept': 'application/json'}
+				})
+			loadData();
+		}
+		async function addArticle() {
+			var url = "http://localhost:4000/articles.json"
+			var art_title = document.getElementById('article_title').value
+			var art_body = document.getElementById('article_body').value
+			var art_pub = "false"
+			var data ={
+				title: art_title,
+				body: art_body,
+				published: art_pub
+			}
+			var response = await fetch(url, { 
+				method: 'POST', 		
+				headers: {
+					'Content-Type': "application/json",
+					'Accept': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			
+			var result = await response.json()
+			console.log(result)
+
+			if(result.error) {
+				document.getElementById("result").innerText = result.error
+			}
+			else {
+				document.getElementById("result").innerText = "Artical added successfully"
+			}
+				}
+		
 	</script>
 </table>
+</div></div>
 </body>
 </html>
+
