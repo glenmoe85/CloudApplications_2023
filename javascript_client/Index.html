@@ -29,7 +29,7 @@ text-align: center">Articles: Javascript</h1>
   <div class="form-group row" id="table_id_div">
     <label for="table_id" class="col-sm-2 col-form-label">ID</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="table_id">
+      <input type="text" class="form-control" id="article_id">
     </div>
   </div>
   <div class="form-group row">
@@ -50,10 +50,11 @@ text-align: center">Articles: Javascript</h1>
   <label class="form-check-label" for="article_published">
    Published
   </label>
-  <input class="form-check-input" type="checkbox" value="" id="article_published">
+  <input class="form-check-input" type="checkbox" id="article_published">
 </div>
   </div>
-  <button class="btn btn-primary" onclick='addArticle()'>Add Article</button>
+  <button class="btn btn-primary" id="addbtn" onclick='addArticle()'>Add Article</button>
+   <button class="btn btn-primary" id="updatebtn" onclick='updateArticle()'>Update Article</button>
 
 <div id="result" >
 	</div>
@@ -66,6 +67,8 @@ text-align: center">Articles: Javascript</h1>
 		async function loadData() {
 		document.getElementById('table_id_div').style.display = 'none';
 		document.getElementById('published_checkbox').style.display = 'none';
+		document.getElementById('addbtn').style.display = 'block';
+		document.getElementById('updatebtn').style.display = 'none';
 		
 		
 			var url = "http://localhost:4000/articles"
@@ -80,7 +83,7 @@ text-align: center">Articles: Javascript</h1>
 			for(var i = 0; i < data.length; i++)
 			{	
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td> " + data[i]['title'] + "</td><td> " + data[i]['body'] + "</td><td> " + data[i]['published'] +"</td><td><button type='button' class='btn cancel' onclick='deleteRow(" + rowId +")'>Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn cancel' onclick='deleteRow(" + rowId +")'>Delete<button type='button' class='btn cancel' onclick='updateRow(this)'>Update</td></tr>"
 			}
 			
 			document.getElementById('tabs').innerHTML = div
@@ -93,6 +96,59 @@ text-align: center">Articles: Javascript</h1>
 				})
 			loadData();
 		}
+		async function updateRow(x) {
+			var rowId = x.parentNode.parentNode.rowIndex;
+			up_art_id=document.getElementById("tabs").rows[rowId].cells.item(0).innerHTML;
+			up_art_title=document.getElementById("tabs").rows[rowId].cells.item(1).innerHTML;
+			up_art_body=document.getElementById("tabs").rows[rowId].cells.item(2).innerHTML;
+			up_art_pub=document.getElementById("tabs").rows[rowId].cells.item(3).innerHTML;
+			if(up_art_pub === "true") {
+				document.getElementById("article_published").checked = true;
+			}
+			else {
+				document.getElementById("article_published").checked = false;
+			}
+			document.getElementById("article_id").value = up_art_id
+			document.getElementById("article_title").value = up_art_title
+			document.getElementById("article_body").value = up_art_body
+			document.getElementById('addbtn').style.display = 'none';
+			document.getElementById('updatebtn').style.display = 'block';
+			document.getElementById('published_checkbox').style.display = 'block';
+		}
+		
+		async function updateArticle() {
+		var art_id = document.getElementById("article_id").value
+		var url = "http://localhost:4000/articles/"+ art_id + "edit"
+			var art_title = document.getElementById('article_title').value
+			var art_body = document.getElementById('article_body').value
+			var art_pub=$("#article_published").is(":checked");
+			var data ={
+				title: art_title,
+				body: art_body,
+				published: art_pub
+			}
+			var response = await fetch(url, { 
+				method: 'PUT', 		
+				headers: {
+					'Content-Type': "application/json",
+					'Accept': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			
+			var result = await response.json()
+			console.log(result)
+
+			if(result.error) {
+				document.getElementById("result").innerText = result.error
+			}
+			else {
+				document.getElementById("result").innerText = "Artical added successfully"
+			}
+			loadData()
+				}
+				
+		
 		async function addArticle() {
 			var url = "http://localhost:4000/articles.json"
 			var art_title = document.getElementById('article_title').value
@@ -119,7 +175,7 @@ text-align: center">Articles: Javascript</h1>
 				document.getElementById("result").innerText = result.error
 			}
 			else {
-				document.getElementById("result").innerText = "Artical added successfully"
+				document.getElementById("result").innerText = "Artical updated successfully"
 			}
 				}
 		
