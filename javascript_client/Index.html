@@ -22,10 +22,13 @@ table, th, td {
 	<h1 style="
     margin-bottom: 30px;
 text-align: center">Articles: Javascript</h1>
+
+   
 	<div class="form-group row">
 	<div class="col-sm-3">
 	
 	<h2 id="form_header">Add an Article</h2>
+	
   <div class="form-group row" id="table_id_div">
     <label for="table_id" class="col-sm-2 col-form-label">ID</label>
     <div class="col-sm-10">
@@ -57,10 +60,10 @@ text-align: center">Articles: Javascript</h1>
     margin-left: 0px;
     margin-right: 0px;
 ">
-  <button class="btn btn-success col-sm-2" id="addbtn" onclick='addArticle()' >Add</button>
-   <button class="btn btn-success col-sm-2" id="editbtn" onclick='editArticle()' style="display: none" >Edit</button>
-   <button class="btn btn-success col-sm-2" id="updatebtn" onclick='updateArticle()' style="display: none" >Update</button>
-   <button class="btn btn-primary col-sm-2" id="cancelbtn" onclick='cancelArticle()' style="display: block; margin-left: 10px" >Cancel</button>
+  <button class="btn btn-success col-sm-3" id="addbtn" onclick='addArticle()' >Add</button>
+   <button class="btn btn-success col-sm-3" id="editbtn" onclick='editArticle()' style="display: none" >Edit</button>
+   <button class="btn btn-success col-sm-3" id="updatebtn" onclick='updateArticle()' style="display: none" >Update</button>
+   <button class="btn btn-primary col-sm-3" id="cancelbtn" onclick='cancelArticle()' style="display: block; margin-left: 10px" >Cancel</button>
 </div>
 
 <div class="form-group row" id="result" style="
@@ -72,7 +75,12 @@ text-align: center">Articles: Javascript</h1>
 	
 	<div class="col-sm-9">
 	<table id="tabs" class="table table-striped table-bordered">
-	<h2>View Articles</h2>
+	<div class="form-group row">
+	<h2 class="col-sm-6">View Articles</h2>
+	 <div  class="col-sm-6" style="margin-top: 20px; margin-bottom:10px; text-align: right">
+<button class="btn btn-info id="allArt" onclick='loadData()' >All</button>
+   <button class="btn btn-info" id="trueArt" onclick="pubStatus('Yes')">Published</button>
+   <button class="btn btn-info" id="falseArt" onclick='pubStatus("No")'  >Unpublished</button></div></div>
 	<script>
 		async function loadData() {
 		document.getElementById('table_id_div').style.display = 'none';
@@ -92,8 +100,46 @@ text-align: center">Articles: Javascript</h1>
 			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
+				
+				var isPub=data[i]['published']
+				if(pub_status = "all" ) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Update<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				}
+			}
+			
+			document.getElementById('tabs').innerHTML = div
+			cancelArticle()
+		}
+		
+		async function pubStatus(pub_status) {
+		document.getElementById('table_id_div').style.display = 'none';
+		document.getElementById('published_checkbox').style.display = 'none';
+		document.getElementById('addbtn').style.display = 'block';
+		document.getElementById('updatebtn').style.display = 'none';
+		
+		
+			var url = "http://localhost:4000/articles"
+			var response = await fetch(url, { 
+				method: 'GET', 
+				headers: {'Accept': 'application/json'}
+				})
+			var data = await response.json()
+			var div = ''
+			var rowId
+			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
+			for(var i = 0; i < data.length; i++)
+			{	
+				
+				var isPub=data[i]['published']
+				if(pub_status === "Yes" && isPub === true) {
+				rowId = data[i]['id']
+				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				}
+				else if(pub_status === "No" && isPub === false) {
+				rowId = data[i]['id']
+				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				}
 			}
 			
 			document.getElementById('tabs').innerHTML = div
