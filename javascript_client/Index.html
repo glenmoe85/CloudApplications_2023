@@ -25,7 +25,7 @@ text-align: center">Articles: Javascript</h1>
 	<div class="form-group row">
 	<div class="col-sm-3">
 	
-	<h2>Add an Article</h2>
+	<h2 id="form_header">Add an Article</h2>
   <div class="form-group row" id="table_id_div">
     <label for="table_id" class="col-sm-2 col-form-label">ID</label>
     <div class="col-sm-10">
@@ -53,10 +53,20 @@ text-align: center">Articles: Javascript</h1>
   <input class="form-check-input" type="checkbox" id="article_published">
 </div>
   </div>
-  <button class="btn btn-primary" id="addbtn" onclick='addArticle()'>Add Article</button>
-   <button class="btn btn-primary" id="updatebtn" onclick='updateArticle()'>Update Article</button>
+  <div class="form-group row" id="form_buttons" style="
+    margin-left: 0px;
+    margin-right: 0px;
+">
+  <button class="btn btn-success col-sm-2" id="addbtn" onclick='addArticle()' >Add</button>
+   <button class="btn btn-success col-sm-2" id="editbtn" onclick='editArticle()' style="display: none" >Edit</button>
+   <button class="btn btn-success col-sm-2" id="updatebtn" onclick='updateArticle()' style="display: none" >Update</button>
+   <button class="btn btn-primary col-sm-2" id="cancelbtn" onclick='cancelArticle()' style="display: block; margin-left: 10px" >Cancel</button>
+</div>
 
-<div id="result" >
+<div class="form-group row" id="result" style="
+    margin-left: 0px;
+    margin-right: 0px;
+" >
 	</div>
 	</div>
 	
@@ -79,14 +89,15 @@ text-align: center">Articles: Javascript</h1>
 			var data = await response.json()
 			var div = ''
 			var rowId
-			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th></tr>"
+			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn cancel' onclick='deleteRow(" + rowId +")'>Delete<button type='button' class='btn cancel' onclick='updateRow(this)'>Update</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Update<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 			}
 			
 			document.getElementById('tabs').innerHTML = div
+			cancelArticle()
 		}
 		async function deleteRow(x) {
 			var url = "http://localhost:4000/articles/"+ x
@@ -96,7 +107,7 @@ text-align: center">Articles: Javascript</h1>
 				})
 			loadData();
 		}
-		async function updateRow(x) {
+		async function viewRow(x) {
 			var rowId = x.parentNode.parentNode.rowIndex;
 			up_art_id=document.getElementById("tabs").rows[rowId].cells.item(0).innerHTML;
 			up_art_title=document.getElementById("tabs").rows[rowId].cells.item(1).innerHTML;
@@ -108,12 +119,42 @@ text-align: center">Articles: Javascript</h1>
 			else {
 				document.getElementById("article_published").checked = false;
 			}
+			document.getElementById("form_header").innerText = "View Article"
 			document.getElementById("article_id").value = up_art_id
 			document.getElementById("article_title").value = up_art_title
 			document.getElementById("article_body").value = up_art_body
 			document.getElementById('addbtn').style.display = 'none';
-			document.getElementById('updatebtn').style.display = 'block';
+			document.getElementById('editbtn').style.display = 'block';
+			document.getElementById('cancelbtn').style.display = 'block';
 			document.getElementById('published_checkbox').style.display = 'block';
+			document.getElementById("article_title").disabled = true;
+			document.getElementById("article_body").disabled = true;
+			document.getElementById("article_published").disabled = true;
+		}
+		
+		function editArticle() {
+			document.getElementById("article_title").disabled = false;
+			document.getElementById("article_body").disabled = false;
+			document.getElementById("article_published").disabled = false;
+			document.getElementById('editbtn').style.display = 'none';
+			document.getElementById('updatebtn').style.display = 'block';
+			document.getElementById("form_header").innerText = "Update Article"
+		
+		}
+		
+		function cancelArticle() {
+			document.getElementById("article_id").value = ""
+			document.getElementById("article_title").value = ""
+			document.getElementById("article_body").value = ''
+			document.getElementById("article_published").checked = false;
+			document.getElementById("form_header").innerText = "Add an Article"
+			document.getElementById("article_title").disabled = false;
+			document.getElementById("article_body").disabled = false;
+			document.getElementById("article_published").disabled = false;
+			document.getElementById('addbtn').style.display = 'block';
+			document.getElementById('editbtn').style.display = 'none';
+			document.getElementById('updatebtn').style.display = 'none';
+			document.getElementById('published_checkbox').style.display = 'none';
 		}
 		
 		async function updateArticle() {
@@ -143,7 +184,7 @@ text-align: center">Articles: Javascript</h1>
 				document.getElementById("result").innerText = result.error
 			}
 			else {
-				document.getElementById("result").innerText = "Artical added successfully"
+				document.getElementById("result").innerText = "Article was successfully updated."
 			}
 			loadData()
 				}
@@ -175,8 +216,9 @@ text-align: center">Articles: Javascript</h1>
 				document.getElementById("result").innerText = result.error
 			}
 			else {
-				document.getElementById("result").innerText = "Artical updated successfully"
+				document.getElementById("result").innerText = "Article was successfully added."
 			}
+			loadData()
 				}
 		
 	</script>
