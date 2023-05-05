@@ -205,7 +205,7 @@ text-align: center">Articles: Javascript</h1>
 		
 		async function updateArticle() {
 		var art_id = document.getElementById("article_id").value
-		var url = "http://localhost:4000/articles/"+ art_id + "edit"
+		var url = "http://localhost:4000/articles/"+ art_id
 			var art_title = document.getElementById('article_title').value
 			var art_body = document.getElementById('article_body').value
 			var art_pub=$("#article_published").is(":checked");
