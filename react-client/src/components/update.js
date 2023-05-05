@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 export default function Update() {
     
     const [id, setID] = useState(null);
@@ -18,7 +17,6 @@ export default function Update() {
 
     const updateAPIData = () => {
         const responseUrl = "/"
-        const element = document.querySelector('#put-request-set-headers .date-updated');
         const config = {
               headers:{
                   'Content-Type':'application/json',
