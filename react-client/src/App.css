@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.headers {
+  text-align: center;  
+  margin-bottom: 20px;
+}
+.margin-top {
+  margin-top: 20px;
+}
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.btn-color
+{
+  color: #fff;
+}
+.row-margin
+{
+  margin-bottom: 15px;
+}
+

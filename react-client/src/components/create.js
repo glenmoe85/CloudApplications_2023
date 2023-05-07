@@ -27,26 +27,34 @@ export default function Create() {
     }
     return (
         <div class='form-group row'>
-            <div class='form-group row'>
-                <div class='col-sm-2'>
-                    <label>Title</label>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-9">
+                <h1 class='headers'>Add Articles</h1>
+                <div class='form-group row row-margin'>
+                    <div class='col-sm-2'>
+                        <label><strong>Title</strong></label>
+                    </div>
+                    <div class='col-sm-8'>
+                        <input type='text' class='form-control' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
+                    </div>
                 </div>
-                <div class='col-sm-10'>
-                      <input type='text' class='form-control' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
+                <div class='form-group row row-margin'>
+                    <div class='col-sm-2'>
+                        <label><strong>Article</strong></label>
+                    </div>
+                    <div class='col-sm-8'>
+                        <textarea class='form-control' rows='3' placeholder='Article' value={body} onChange={(e) => setArticle(e.target.value)}>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group row" id="form_buttons" >
+                    <div class='col-sm-2'></div>
+                    <div class='col-sm-10'>
+                        <button class="btn btn-success col-sm-3" onClick={postData} type='submit'>Submit</button>
+                    </div>
                 </div>
             </div>
-            <div class='form-group row'>
-                <div class='col-sm-2'>
-                    <label>Article</label>
-                </div>
-                <div class='col-sm-10'>
-                    <textarea class='form-control' rows='3' placeholder='Article' value={body} onChange={(e) => setArticle(e.target.value)}>
-                    </textarea>
-                </div>
-            </div>
-            <div class="form-group row" id="form_buttons" >
-                <button class="btn btn-success col-sm-3" onClick={postData} type='submit'>Submit</button>
-            </div>
+            <div class="col-sm-1"></div>
         </div>
     )
 }

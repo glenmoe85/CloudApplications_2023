@@ -28,7 +28,7 @@ export default function Read() {
     }
 
     const getData = () => {
-        axios.get('http://localhost:4000/articles', config)
+        axios.get('http://localhost:4000/articles', config )
             .then((getData) => {
                 setAPIData(getData.data);
             })
@@ -41,13 +41,23 @@ export default function Read() {
             getData();
         })
     }
+    
+  
 
 return (
-        <div>
-            <table>
+
+
+        <div class="form-group row ">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-9">
+        <h1 class='headers'>View Articles</h1>
+         <Link to='/create'>
+                <button class='btn btn-success margin-bottom ' >Add Article</button>
+            </Link>
+           
+            <table id="tabs" class="table table-striped table-bordered btn-color">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Title</th>
                         <th>Artile</th>
                         <th>Published</th>
@@ -58,24 +68,28 @@ return (
 
                 <tbody>
                 {APIData.map((data, i) => {
-                        return (
+                        return (                            
                             <tr>
-                            <td>{data.id}</td>
                                 <td>{data.title}</td>
                                 <td>{data.body}</td>
                                 <td>{data.published ? "Yes" : "No"}</td>
+                                <td class='btn-color'>
                                  <Link to='/update'>
-                                <td><button onClick={() => setData(data)}>Update</button></td>
+                                <button class='btn btn-primary ' onClick={() => setData(data)}>Update</button>
                                 </Link>
-                                <td>
-                                    <button onClick={() => onDelete(data.id)}>Delete</button>
                                 </td>
-                            </tr>
+                                <td>
+                                    <button class='btn btn-danger' onClick={() => onDelete(data.id)}>Delete</button>
+                                </td>
+                            </tr>                            
+                            
                         )
                     })}
                 </tbody>
                 
             </table>
+            </div>
+            <div class="col-sm-1"></div>
         </div>
     )
 }

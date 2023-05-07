@@ -4,14 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Read from './components/read';
 import Update from './components/update';
 import Create from './components/create';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
 
   return (
     <>
-    <div>
+    <div class='margin-top'>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Read />} />
