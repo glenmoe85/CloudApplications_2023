@@ -11,7 +11,7 @@ export default function Read() {
           }
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:4000/articles', config)
+        axios.get('http://54.162.177.181:4000/articles', config)
             .then((response) => {                
                 setAPIData(response.data);
             })
@@ -28,14 +28,14 @@ export default function Read() {
     }
 
     const getData = () => {
-        axios.get('http://localhost:4000/articles', config )
+        axios.get('http://54.162.177.181:4000/articles', config )
             .then((getData) => {
                 setAPIData(getData.data);
             })
     }
 
     const onDelete = (id) => {
-        var url = "http://localhost:4000/articles/"+ id
+        var url = "http://54.162.177.181:4000/articles/"+ id
         axios.delete(url, config)
         .then(() => {
             getData();
