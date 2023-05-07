@@ -5,6 +5,7 @@ export default function Create() {
     
     const [title, setTitle] = useState('');
     const [body, setArticle] = useState('');
+    const [published, setPublished] = useState(false);
 
     const postData = () => {
         const config = {
