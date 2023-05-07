@@ -5,17 +5,15 @@ export default function Create() {
     
     const [title, setTitle] = useState('');
     const [body, setArticle] = useState('');
-    const [published, setPublished] = useState(false);
 
     const postData = () => {
-        const responseUrl = "/"
         const config = {
               headers:{
                   'Content-Type':'application/json',
                   'Accept':'application/json'
               }
           }
-        const url="http://localhost:4000/articles.json"
+        const url="http://54.162.177.181:4000/articles.json"
         const data = { title: title, body: body, published: published };
         console.log(url)
         console.log(data)
