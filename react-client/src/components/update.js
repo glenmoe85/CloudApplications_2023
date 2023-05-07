@@ -16,14 +16,13 @@ export default function Update() {
     }, []);
 
     const updateAPIData = () => {
-        const responseUrl = "/"
         const config = {
               headers:{
                   'Content-Type':'application/json',
                   'Accept':'application/json'
               }
           }
-        const url="http://localhost:4000/articles/"+ id + ".json"
+        const url="http://54.162.177.181:4000/articles/"+ id + ".json"
         const data = { title: title, body: body, published: published };
 
         axios.put(url, data, { config }).then(response => 
