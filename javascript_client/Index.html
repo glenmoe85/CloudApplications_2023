@@ -89,7 +89,7 @@ text-align: center">Articles: Javascript</h1>
 		document.getElementById('updatebtn').style.display = 'none';
 		
 		
-			var url = "http://localhost:4000/articles"
+			var url = "http://54.162.177.181:4000/articles"
 			var response = await fetch(url, { 
 				method: 'GET', 
 				headers: {'Accept': 'application/json'}
@@ -119,7 +119,7 @@ text-align: center">Articles: Javascript</h1>
 		document.getElementById('updatebtn').style.display = 'none';
 		
 		
-			var url = "http://localhost:4000/articles"
+			var url = "http://54.162.177.181:4000/articles"
 			var response = await fetch(url, { 
 				method: 'GET', 
 				headers: {'Accept': 'application/json'}
@@ -146,7 +146,7 @@ text-align: center">Articles: Javascript</h1>
 			cancelArticle()
 		}
 		async function deleteRow(x) {
-			var url = "http://localhost:4000/articles/"+ x
+			var url = "http://54.162.177.181:4000/articles/"+ x
 			var response = await fetch(url, { 
 				method: 'DELETE', 
 				headers: {'Accept': 'application/json'}
@@ -205,7 +205,7 @@ text-align: center">Articles: Javascript</h1>
 		
 		async function updateArticle() {
 		var art_id = document.getElementById("article_id").value
-		var url = "http://localhost:4000/articles/"+ art_id
+		var url = "http://54.162.177.181:4000/articles/"+ art_id
 			var art_title = document.getElementById('article_title').value
 			var art_body = document.getElementById('article_body').value
 			var art_pub=$("#article_published").is(":checked");
@@ -237,7 +237,7 @@ text-align: center">Articles: Javascript</h1>
 				
 		
 		async function addArticle() {
-			var url = "http://localhost:4000/articles.json"
+			var url = "http://54.162.177.181:4000/articles.json"
 			var art_title = document.getElementById('article_title').value
 			var art_body = document.getElementById('article_body').value
 			var art_pub = "false"
