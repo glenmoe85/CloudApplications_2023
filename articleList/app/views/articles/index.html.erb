@@ -97,14 +97,14 @@ text-align: center">Articles: Javascript</h1>
 			var data = await response.json()
 			var div = ''
 			var rowId
-			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
+			div += "<tr><th hidden>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
 				
 				var isPub=data[i]['published']
 				if(pub_status = "all" ) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 			}
 			
@@ -127,18 +127,18 @@ text-align: center">Articles: Javascript</h1>
 			var data = await response.json()
 			var div = ''
 			var rowId
-			div += "<tr><th>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
+			div += "<tr><th hidden>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
 				
 				var isPub=data[i]['published']
 				if(pub_status === "Yes" && isPub === true) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 				else if(pub_status === "No" && isPub === false) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 			}
 			
