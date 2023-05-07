@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Update() {
     
@@ -67,7 +68,8 @@ export default function Update() {
                 <div class="form-group row" id="form_buttons" >
                     <div class='col-sm-2'></div>
                     <div class='col-sm-10'>
-                    <button class="btn btn-success col-sm-3" onClick={updateAPIData} >Update</button>
+                        <button class="btn btn-success col-sm-3" onClick={updateAPIData} >Update</button>
+                        <Link to="/" className="btn btn-danger col-sm-3 margin-button">Cancel</Link>
                     </div>
                 </div>
             </div>
