@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Create() {
     
@@ -50,6 +51,8 @@ export default function Create() {
                     <div class='col-sm-2'></div>
                     <div class='col-sm-10'>
                         <button class="btn btn-success col-sm-3" onClick={postData} type='submit'>Submit</button>
+                        <Link to="/" className="btn btn-danger col-sm-3 margin-button">Cancel</Link>
+
                     </div>
                 </div>
             </div>
