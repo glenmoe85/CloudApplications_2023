@@ -61,6 +61,7 @@ return (
                         <th>Title</th>
                         <th>Artile</th>
                         <th>Published</th>
+						<th>View</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -74,6 +75,11 @@ return (
                                 <td>{data.body}</td>
                                 <td>{data.published ? "Yes" : "No"}</td>
                                 <td class='btn-color'>
+								<Link to='/view'>
+                                <button class='btn btn-primary ' onClick={() => setData(data)}>View</button>
+                                </Link>
+								</td>
+								 <td class='btn-color'>
                                  <Link to='/update'>
                                 <button class='btn btn-primary ' onClick={() => setData(data)}>Update</button>
                                 </Link>
