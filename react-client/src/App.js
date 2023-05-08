@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Read from './components/read';
 import Update from './components/update';
 import Create from './components/create';
+import View from './components/view';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -21,6 +22,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/create" element={<Create />} />
+        </Routes>
+        <Routes>
+          <Route path="/view" element={<View />} />
         </Routes>
       </BrowserRouter>
     </div>
