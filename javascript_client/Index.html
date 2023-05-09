@@ -97,14 +97,21 @@ text-align: center">Articles: Javascript</h1>
 			var data = await response.json()
 			var div = ''
 			var rowId
-			div += "<tr><th hidden>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
+			div += "<tr><th hidden>ID</th><th class='col-sm-2'>Title</th><th class='col-sm-7'>Article</th><th class='col-sm-1'>Published</th><th class='col-sm-2'>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
-				
+				var published
 				var isPub=data[i]['published']
+				if ( isPub === true) {
+					published = "Yes"
+					}
+					else
+					{
+					published = "No"
+					}
 				if(pub_status = "all" ) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td hidden id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td hidden id='a_id'>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + published +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 			}
 			
@@ -127,18 +134,18 @@ text-align: center">Articles: Javascript</h1>
 			var data = await response.json()
 			var div = ''
 			var rowId
-			div += "<tr><th hidden>ID</th><th>Title</th><th>Article</th><th>Published</th><th>Action</th></tr>"
+			div += "<tr><th hidden>ID</th><th class='col-sm-2'>Title</th><th class='col-sm-7'>Article</th><th class='col-sm-1'>Published</th><th class='col-sm-2'>Action</th></tr>"
 			for(var i = 0; i < data.length; i++)
 			{	
-				
 				var isPub=data[i]['published']
 				if(pub_status === "Yes" && isPub === true) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				
+				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + pub_status +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 				else if(pub_status === "No" && isPub === false) {
 				rowId = data[i]['id']
-				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + data[i]['published'] +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
+				div += "<tr id='" + rowId +"'><td id='a_id' hidden>" + data[i]['id'] + "</td><td id='a_title'>" + data[i]['title'] + "</td><td id='a_body'>" + data[i]['body'] + "</td><td id='a_pub'>" + pub_status +"</td><td><button type='button' class='btn btn-info' onclick='viewRow(this)' style='margin-right: 10px'>View<button type='button' class='btn btn-danger' onclick='deleteRow(" + rowId +")' >Delete</td></tr>"
 				}
 			}
 			
@@ -159,7 +166,7 @@ text-align: center">Articles: Javascript</h1>
 			up_art_title=document.getElementById("tabs").rows[rowId].cells.item(1).innerHTML;
 			up_art_body=document.getElementById("tabs").rows[rowId].cells.item(2).innerHTML;
 			up_art_pub=document.getElementById("tabs").rows[rowId].cells.item(3).innerHTML;
-			if(up_art_pub === "true") {
+			if(up_art_pub === "Yes") {
 				document.getElementById("article_published").checked = true;
 			}
 			else {
