@@ -1,11 +1,12 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  body: MyText
-  published: false
+test_One:
+  title: Test title one
+  body: Test body text one
+  published: true
 
-two:
-  title: MyString
-  body: MyText
+test_Two:
+  title: Test title two
+  body: Test body text two
   published: false
+  
